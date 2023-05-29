@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import Modal from "../Modal";
 
 const PhotoList = ({ category }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [photos] = useState([
     {
       name: "Grocery aisle",
@@ -119,15 +122,28 @@ const PhotoList = ({ category }) => {
   ]);
 
   const currentPhotos = photos.filter((photo) => photo.category === category);
+  const [currentPhoto, setCurrentPhoto] = useState();  
+
+  const toggleModal = (image, i) => {
+    // set current photo state
+    setCurrentPhoto({...image, index:i}); // manage the current photo data & state retrieved thru onClick(e) =>
+    setIsModalOpen(!isModalOpen); // v1: true... v2: (!isModalOpen) -> need to pass prop down to child for 'close this modal' button to handle the closing
+  }
 
   return (
     <div>
+      {/* <Modal currentPhoto={currentPhoto}/>      v1  */} 
+      {/* v2 (below): renders modal only if isModalOpen==true */}
+      {isModalOpen && (
+        // passing prop to child to closeModal via button
+      <Modal currentPhoto={currentPhoto} onClose={toggleModal} />)} 
       <div className="flex-row">
         {currentPhotos.map((image, i) => (
           <img
-            src={require(`../../assets/small/${category}/${i}.jpg`).default}
+            src={require(`../../assets/small/${category}/${i}.jpg`)}
             alt={image.name}
             className="img-thumbnail mx-1"
+            onClick={() => {toggleModal(image, i); console.log(image)}} // image: object reppin' the element in photo array... i: argument that'll render the img (as we did with src attribute w/ require function)
             key={image.name}
           />
         ))}

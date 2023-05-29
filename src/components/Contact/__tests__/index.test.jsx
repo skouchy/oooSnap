@@ -56,7 +56,7 @@ describe("contact button", () => {
         setContactSelected={mockSetContactSelected}
       />
     );
-    expect(getByTestId('submit')).toHaveTextContent('Submit');
+    expect(getByTestId('button')).toHaveTextContent('Submit');
   });
 });
 

@@ -29,19 +29,19 @@ function ContactForm() {
         setErrorMessage("");
       }
     }
-    if (!errorMessage) {
-      setFormState({ ...formState, [e.target.name]: e.target.value });
-      console.log(formState);
-    }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!errorMessage) {
+      setFormState({ [e.target.name]: e.target.value });
+      console.log(formState);
+    }
   }
 
   return (
     <section>
-      <h1 data-testid='contact-header'>Contact Me</h1>
+      <h1 data-testid="contact-header">Contact Me</h1>
       <form id="contact-form" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Name:</label>
@@ -75,7 +75,9 @@ function ContactForm() {
             <p className="error-text">{errorMessage}</p>
           </div>
         )}
-        <button data-testid='submit' type="submit">Submit</button>
+        <button data-testid="button" type="submit">
+          Submit
+        </button>
       </form>
     </section>
   );
